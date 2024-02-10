@@ -23,9 +23,8 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -46,18 +45,6 @@ public class Article {
     @ToString.Exclude // 댓글 리스트를 굳이 다 뽑아보지 않아도 되니까 ? 여기서 exclude,, 쓰지 않으면 순환참조 발생 가능, Article 의 커멘트를 toString 커멘트에서 Article 을 toString
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdAt; // 생성일시
-    @CreatedBy
-    @Column(nullable = false, length = 100)
-    private String createdBy; // 생성자
-    @LastModifiedDate
-    @Column(nullable = false)
-    private LocalDateTime modifiedAt; // 수정일시
-    @LastModifiedBy
-    @Column(nullable = false, length = 100)
-    private String modifiedBy; // 수정자
 
     protected Article() {
     }
