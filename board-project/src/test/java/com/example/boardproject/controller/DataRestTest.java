@@ -44,7 +44,7 @@ public class DataRestTest {
         //given
 
         //when & then
-        mockMvc.perform(get("/api/article/1"))
+        mockMvc.perform(get("/api/articles/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")))
         ;
@@ -56,7 +56,7 @@ public class DataRestTest {
         //given
 
         //when & then
-        mockMvc.perform(get("/api/article/1/articleComments"))
+        mockMvc.perform(get("/api/articles/1/articleComments"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")))
         ;
