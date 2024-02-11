@@ -1,17 +1,18 @@
 package com.example.boardproject.domain;
 
+import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-
-@Table(indexes = {
+@Getter
+@Table(name = "ARTICLECOMMENT", indexes = {
         @Index(columnList = "content"),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
+
 @Entity
 public class ArticleComment extends AuditingFields {
     @Id

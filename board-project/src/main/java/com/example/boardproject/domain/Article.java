@@ -3,14 +3,8 @@ package com.example.boardproject.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -42,7 +36,8 @@ public class Article extends AuditingFields {
 
     @OrderBy("id")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    @ToString.Exclude // 댓글 리스트를 굳이 다 뽑아보지 않아도 되니까 ? 여기서 exclude,, 쓰지 않으면 순환참조 발생 가능, Article 의 커멘트를 toString 커멘트에서 Article 을 toString
+    @ToString.Exclude
+    // 댓글 리스트를 굳이 다 뽑아보지 않아도 되니까 ? 여기서 exclude,, 쓰지 않으면 순환참조 발생 가능, Article 의 커멘트를 toString 커멘트에서 Article 을 toString
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
 
