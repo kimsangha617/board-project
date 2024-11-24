@@ -13,7 +13,7 @@ logging:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/board
-    username: haas
+    username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
@@ -25,6 +25,7 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
+    open-in-view: false # osiv 기능 해제 -- 영속성 컨텍스트가 트랜잭션 범위 안에서 종료되하는 설정
   h2:
     console:
       enabled: false
