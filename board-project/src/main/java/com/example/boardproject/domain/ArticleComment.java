@@ -1,5 +1,7 @@
 package com.example.boardproject.domain;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,8 +28,18 @@ public class ArticleComment extends AuditingFields {
     private Article article; // 게시글(ID)
 
     @Setter
+    @JoinColumn(name = "userId")
     @ManyToOne(optional = false)
     private UserAccount userAccount;
+
+    @Setter
+    @Column(updatable = false)
+    private Long parentCommentId;
+
+    @ToString.Exclude
+    @OrderBy("createdAt ASC")
+    @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL)
+    private Set<ArticleComment> childComments = new LinkedHashSet<>();
 
     @Setter
     @Column(nullable = false, length = 500)
@@ -37,14 +49,20 @@ public class ArticleComment extends AuditingFields {
     protected ArticleComment() {
     }
 
-    private ArticleComment(Article article, UserAccount userAccount, String content) {
+    private ArticleComment(Article article, UserAccount userAccount, Long parentCommentId, String content) {
         this.article = article;
         this.userAccount = userAccount;
+        this.parentCommentId = parentCommentId;
         this.content = content;
     }
 
     public static ArticleComment of(Article article, UserAccount userAccount, String content) {
-        return new ArticleComment(article, userAccount, content);
+        return new ArticleComment(article, userAccount, null, content);
+    }
+
+    public void addChildComment(ArticleComment child) {
+      child.setParentCommentId(this.getId());
+      this.getChildComments().add(child);
     }
 
     @Override

@@ -33,14 +33,17 @@ public class Article extends AuditingFields {
     @Column(nullable = false, length = 10000)
     private String content; // 본문
 
-    @ToString.Exclude
-    @JoinTable(
-            name = "article_hashtag",
-            joinColumns = @JoinColumn(name = "articleId"),
-            inverseJoinColumns = @JoinColumn(name = "hashtagId")
-    )
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Hashtag> hashtags = new LinkedHashSet<>(); // 해시태그
+    @Setter
+    private String hashtag;
+
+//    @ToString.Exclude
+//    @JoinTable(
+//            name = "article_hashtag",
+//            joinColumns = @JoinColumn(name = "articleId"),
+//            inverseJoinColumns = @JoinColumn(name = "hashtagId")
+//    )
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private Set<ArticleComment> hashtags = new LinkedHashSet<>(); // 해시태그
 
     @ToString.Exclude
     @OrderBy("createdAt DESC")
@@ -52,23 +55,17 @@ public class Article extends AuditingFields {
     protected Article() {
     }
 
-    private Article(UserAccount userAccount, String title, String content) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
         this.userAccount = userAccount;
         this.title = title;
         this.content = content;
+        this.hashtag = hashtag;
     }
 
-    public static Article of(UserAccount userAccount, String title, String content) {
-        return new Article(userAccount, title, content);
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
 
-    public void addHashTag(Hashtag hashtag) {
-        this.getHashtags().add(hashtag);
-    }
-
-    public void addHashTags(Collection<Hashtag> hashtags) {
-        this.getHashtags().addAll(hashtags);
-    }
 
     @Override
     public boolean equals(Object object) {

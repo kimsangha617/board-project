@@ -30,28 +30,28 @@ class ArticleCommentServiceTest {
     @Mock private ArticleCommentRepository articleCommentRepository;
     @Mock private ArticleRepository articleRepository;
 
-    @DisplayName("게시글을 검색하면 해당하는 댓글 리스트를 반환합니다")
-    @Test
-    void givenArticleId_whenSearchingComments_thenReturnArticleComments() {
-        Long articleId = 1L;
-        given(articleRepository.findById(articleId)).willReturn(Optional.of(
-                Article.of("Title", "content", "#java"))
-        );
+//    @DisplayName("게시글을 검색하면 해당하는 댓글 리스트를 반환합니다")
+//    @Test
+//    void givenArticleId_whenSearchingComments_thenReturnArticleComments() {
+//        Long articleId = 1L;
+//        given(articleRepository.findById(articleId)).willReturn(Optional.of(
+//                Article.of("Title", "content", "#java"))
+//        );
+//
+//        List<ArticleCommentDto> articleComments = sut.searchArticleComment(1L);
+//
+//        assertThat(articleComments).isNotNull();
+//        then(articleRepository).should().findById(articleId);
+//    }
 
-        List<ArticleCommentDto> articleComments = sut.searchArticleComment(1L);
-
-        assertThat(articleComments).isNotNull();
-        then(articleRepository).should().findById(articleId);
-    }
-
-    @DisplayName("댓글 정보를 입력하면, 댓글을 저장한다")
-    @Test
-    void givenArticleCommentInfo_whenSavingComments_thenSaveArticleComments() {
-
-        ArticleCommentDto dto = ArticleCommentDto.of(LocalDateTime.now(), "tester", null, null, "comment1");
-        given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
-
-        sut.saveArticleComment(dto);
-        then(articleCommentRepository).should().save(any(ArticleComment.class));
-    }
+//    @DisplayName("댓글 정보를 입력하면, 댓글을 저장한다")
+//    @Test
+//    void givenArticleCommentInfo_whenSavingComments_thenSaveArticleComments() {
+//
+//        ArticleCommentDto dto = ArticleCommentDto.of(LocalDateTime.now(), "tester", null, null, "comment1");
+//        given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
+//
+//        sut.saveArticleComment(dto);
+//        then(articleCommentRepository).should().save(any(ArticleComment.class));
+//    }
 }

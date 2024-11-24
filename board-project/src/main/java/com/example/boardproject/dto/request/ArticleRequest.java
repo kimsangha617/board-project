@@ -15,16 +15,15 @@ public record ArticleRequest(
         return new ArticleRequest(title, content);
     }
 
-    public ArticleDto toDto(UserAccountDto userAccountDto) {
-        return toDto(userAccountDto, null);
-    }
+//    public ArticleDto toDto(UserAccountDto userAccountDto) {
+//        return toDto(userAccountDto, null);
+//    }
 
-    public ArticleDto toDto(UserAccountDto userAccountDto, Set<HashtagDto> hashtagDto) {
-        return ArticleDto.of(
-                userAccountDto,
-                title,
-                content,
-                hashtagDto
-        );
-    }
+//    public ArticleDto toDto(UserAccountDto userAccountDto) {
+//        return ArticleDto.of(
+//                userAccountDto,
+//                title,
+//                content
+//        );
+//    }
 }

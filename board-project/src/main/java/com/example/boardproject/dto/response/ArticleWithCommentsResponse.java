@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record ArticleWithCommentResponse (
+public record ArticleWithCommentsResponse(
     Long id,
     String title,
     String content,
@@ -18,13 +18,13 @@ public record ArticleWithCommentResponse (
     Set<ArticleCommentResponse> articleCommentsResponse
 ) implements Serializable {
 
-  public static ArticleWithCommentResponse from(ArticleWithCommentDto articleDto) {
+  public static ArticleWithCommentsResponse from(ArticleWithCommentDto articleDto) {
     String nickname = articleDto.userAccountDto().nickname();
     if (nickname == null || nickname.isBlank()) {
       nickname = articleDto.userAccountDto().userId();
     }
 
-    return new ArticleWithCommentResponse(
+    return new ArticleWithCommentsResponse(
         articleDto.id(),
         articleDto.title(),
         articleDto.content(),
@@ -36,5 +36,9 @@ public record ArticleWithCommentResponse (
             .map(ArticleCommentResponse::from)
             .collect(Collectors.toCollection(LinkedHashSet::new))
     );
+  }
+
+  public static ArticleWithCommentsResponse of(Long id, String title, String content, String hashtag, LocalDateTime createdAt, String email, String nickname, Set<ArticleCommentResponse> articleCommentResponses) {
+    return new ArticleWithCommentsResponse(id, title, content, hashtag, createdAt, email, nickname, articleCommentResponses);
   }
 }
