@@ -17,7 +17,7 @@ import java.util.Objects;
 @Entity
 public class UserAccount extends AuditingFields {
     @Id
-    @Column(length = 50)
+    @Column(length = 50, name = "user_id")
     private String userId;
 
     @Setter

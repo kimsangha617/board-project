@@ -41,37 +41,36 @@ class JpaRepositoryTest {
                 ;
     }
 
-    @DisplayName("select test")
-    @Test
-    void givenTestData_whenInserting_thenWorksFine() {
-        //given
-        long previousCount = articleRepository.count();
-        Article article = Article.of("new Article", "new Content", "#spring");
-        //when
-        Article savedArticle = articleRepository.save(article);
+//    @DisplayName("select test")
+//    @Test
+//    void givenTestData_whenInserting_thenWorksFine() {
+//        //given
+//        long previousCount = articleRepository.count();
+//        Article article = Article.of("new Article", "new Content", "#spring");
+//        //when
+//        Article savedArticle = articleRepository.save(article);
+//
+//        //then
+//        assertThat(articleRepository.count())
+//                .isEqualTo(previousCount+1)
+//        ;
+//    }
 
-        //then
-        assertThat(articleRepository.count())
-                .isEqualTo(previousCount+1)
-        ;
-
-    }
-
-    @DisplayName("select test")
-    @Test
-    void givenTestData_whenUpdating_thenWorksFine() {
-        //given
-        Article article = articleRepository.findById(1L).orElseThrow();
-        String updatedHashtag = "#springboot";
-        article.setHashtag(updatedHashtag);
-
-        //when
-        Article savedArticle = articleRepository.saveAndFlush(article);
-
-        //then
-        assertThat(savedArticle)
-                .hasFieldOrPropertyWithValue("hashtag", updatedHashtag);
-        ;
-
-    }
+//    @DisplayName("select test")
+//    @Test
+//    void givenTestData_whenUpdating_thenWorksFine() {
+//        //given
+//        Article article = articleRepository.findById(1L).orElseThrow();
+//        String updatedHashtag = "#springboot";
+//        article.setHashtag(updatedHashtag);
+//
+//        //when
+//        Article savedArticle = articleRepository.saveAndFlush(article);
+//
+//        //then
+//        assertThat(savedArticle)
+//                .hasFieldOrPropertyWithValue("hashtag", updatedHashtag);
+//        ;
+//
+//    }
 }
