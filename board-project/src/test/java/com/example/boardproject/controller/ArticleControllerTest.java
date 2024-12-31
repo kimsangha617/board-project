@@ -6,10 +6,14 @@ import com.example.boardproject.dto.ArticleWithCommentDto;
 import com.example.boardproject.dto.UserAccountDto;
 import com.example.boardproject.service.ArticleService;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
+
+import com.example.boardproject.service.PaginationService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,8 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,6 +39,9 @@ class ArticleControllerTest {
     //Controller 단에 ArticleService 와의 의존성을 끊기 위해 사용
     @MockBean
     private ArticleService articleService;
+
+    @MockBean
+    private PaginationService paginationService;
 
     private final MockMvc mvc;
 
@@ -54,6 +60,8 @@ class ArticleControllerTest {
         // 따라서 eq() 메소드를 사용하여 Null 값을 넣어준다
         given(articleService.searchArticles(eq(null), eq(null), any(Pageable.class)))
             .willReturn(Page.empty());
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4));
+
 
         //when&then
         mvc.perform(get("/articles"))
@@ -61,9 +69,11 @@ class ArticleControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/index"))
                 .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("paginationBarNumbers"))
         ;
 
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+        then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
     @DisplayName("[view][GET] 게시글 상세 페이지 - 정상 호출")
