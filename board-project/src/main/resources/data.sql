@@ -3,6 +3,12 @@ insert into user_account (user_id, user_password, nickname, email, memo, created
 values ('uno', 'asdf1234', 'Uno', 'uno@mail.com', 'I am Uno.', now(), 'uno', now(), 'uno')
 ;
 
+insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by,
+                          modified_at, modified_by)
+values ('kim', 'asdf1234', 'Kim', 'Kim@example.com', 'I am Kim.', now(), 'uno', now(), 'uno')
+;
+
+
 insert into article (user_id, title, content, hashtag, created_by, modified_by, created_at,
                      modified_at)
 values ('uno', 'Aliquam erat volutpat.',
@@ -546,7 +552,7 @@ values ('kim', 'In hac habitasse platea dictumst.',
         'Carling', '2023-10-20 20:35:26', '2023-02-04 16:26:04');
 
 
-insert into articlecomment (article_id, user_id, parent_comment_id, content, created_at,
+insert into article_comment (article_id, user_id, parent_comment_id, content, created_at,
                              modified_at, created_by, modified_by)
 values (49, 'kim', null,
         'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.',
